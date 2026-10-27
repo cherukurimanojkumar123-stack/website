@@ -11,9 +11,19 @@ move(State, NewState) :- move_right(State, NewState).
 move(State, NewState) :- move_up(State, NewState). 
 move(State, NewState) :- move_down(State, NewState).
 % Movement definitions
-move_left([A,B,C,D,E,F,G,H,I], [B,A,C,D,E,F,G,H,I]) :- A =\= 0, B =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,C,B,D,E,F,G,H,I]) :- B =\= 0, C =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,E,D,F,G,H,I]) :- D =\= 0, E =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,F,E,G,H,I]) :- E =\= 0, F =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,F,H,G,I]) :- G =\= 0, H =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,F,G,I,H]) :- H =\= 0, I =:= 0.
+move_left([A,B,C,D,E,F,G,H,I], [B,A,C,D,E,F,G,H,I]) :- A =\= 0, B =:= 0.
+move_left([A,B,C,D,E,F,G,H,I], [A,C,B,D,E,F,G,H,I]) :- B =\= 0, C =:= 0.
+move_left([A,B,C,D,E,F,G,H,I], [A,B,C,E,D,F,G,H,I]) :- D =\= 0, E =:= 0. 
+move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,F,E,G,H,I]) :- E =\= 0, F =:= 0.
+move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,F,H,G,I]) :- G =\= 0, H =:= 0.
+move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,F,G,I,H]) :- H =\= 0, I =:= 0.
 move_right(S1, S2) :- move_left(S2, S1).  % Right is reverse of left
-move_up([A,B,C,D,E,F,G,H,I], [D,B,C,A,E,F,G,H,I]) :- A =\= 0, D =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,E,C,D,B,F,G,H,I]) :- B =\= 0, E =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,F,D,E,C,G,H,I]) :- C =\= 0, F =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,C,G,E,F,D,H,I]) :- D =\= 0, G =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,C,D,H,F,G,E,I]) :- E =\= 0, H =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,I,G,H,F]) :- F =\= 0, I =:= 0.
+move_up([A,B,C,D,E,F,G,H,I], [D,B,C,A,E,F,G,H,I]) :- A =\= 0, D =:= 0.
+move_up([A,B,C,D,E,F,G,H,I], [A,E,C,D,B,F,G,H,I]) :- B =\= 0, E =:= 0.
+move_up([A,B,C,D,E,F,G,H,I], [A,B,F,D,E,C,G,H,I]) :- C =\= 0, F =:= 0.
+move_up([A,B,C,D,E,F,G,H,I], [A,B,C,G,E,F,D,H,I]) :- D =\= 0, G =:= 0. 
+move_up([A,B,C,D,E,F,G,H,I], [A,B,C,D,H,F,G,E,I]) :- E =\= 0, H =:= 0. 
+move_up([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,I,G,H,F]) :- F =\= 0, I =:= 0.
 move_down(S1, S2) :- move_up(S2, S1).  % Down is reverse of up
 % Solve the puzzle using DFS
 solve(State, Moves) :- dfs(State, [], Moves).
@@ -74,7 +84,8 @@ permute(Remaining, T).
 % Solve TSP without using dynamic predicates 
 solve_tsp(StartCity, BestRoute, BestDistance) :-
 % Get unique list of cities connected to StartCity
-findall(City, (dist(StartCity, City, _); dist(City, StartCity, _)), CitiesDup), sort(CitiesDup, Cities),
+findall(City, (dist(StartCity, City, _); dist(City, StartCity, _)), CitiesDup),
+sort(CitiesDup, Cities),
 % Generate all permutations of cities excluding StartCity
 permute(Cities, Permuted),
 % Build all routes and their distances
