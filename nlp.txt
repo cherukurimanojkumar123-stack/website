@@ -1,0 +1,207 @@
+lab 5:-
+
+% Define the goal state 
+goal([1,2,3,4,5,6,7,8,0]).
+% Swap positions in a list 
+swap([A,B|T], [B,A|T]).
+swap([H|T], [H|R]) :- swap(T, R).
+% Move rules: only valid if 0 can be swapped with the target
+move(State, NewState) :- move_left(State, NewState).
+move(State, NewState) :- move_right(State, NewState). 
+move(State, NewState) :- move_up(State, NewState). 
+move(State, NewState) :- move_down(State, NewState).
+% Movement definitions
+move_left([A,B,C,D,E,F,G,H,I], [B,A,C,D,E,F,G,H,I]) :- A =\= 0, B =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,C,B,D,E,F,G,H,I]) :- B =\= 0, C =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,E,D,F,G,H,I]) :- D =\= 0, E =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,F,E,G,H,I]) :- E =\= 0, F =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,F,H,G,I]) :- G =\= 0, H =:= 0. move_left([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,F,G,I,H]) :- H =\= 0, I =:= 0.
+move_right(S1, S2) :- move_left(S2, S1).  % Right is reverse of left
+move_up([A,B,C,D,E,F,G,H,I], [D,B,C,A,E,F,G,H,I]) :- A =\= 0, D =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,E,C,D,B,F,G,H,I]) :- B =\= 0, E =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,F,D,E,C,G,H,I]) :- C =\= 0, F =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,C,G,E,F,D,H,I]) :- D =\= 0, G =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,C,D,H,F,G,E,I]) :- E =\= 0, H =:= 0. move_up([A,B,C,D,E,F,G,H,I], [A,B,C,D,E,I,G,H,F]) :- F =\= 0, I =:= 0.
+move_down(S1, S2) :- move_up(S2, S1).  % Down is reverse of up
+% Solve the puzzle using DFS
+solve(State, Moves) :- dfs(State, [], Moves).
+dfs(State, Path, [State]) :- 
+goal(State).
+dfs(State, Visited, [State|Moves]) :- 
+move(State, Next),
+\+ member(Next, Visited),
+dfs(Next, [State|Visited], Moves).
+
+Query: solve([1,2,3,4,0,6,7,5,8], Moves).
+----------------------------------------------------------
+LAB-6:-
+
+% Main predicate: find a solution to the 4-Queens problem 
+four_queens(Solution) :-
+Solution = [Q1, Q2, Q3, Q4],
+permutation([1,2,3,4], Solution),
+safe(Solution).
+% Check that no two queens attack each other diagonally 
+safe([]).
+safe([Q|Others]) :-
+safe(Others),
+no_attack(Q, Others, 1).
+% Check that Q does not attack any queen in Others at distance D 
+no_attack(_, [], _).
+no_attack(Q, [Q1|Others], D) :-
+Q =\= Q1 + D,
+Q =\= Q1 - D,
+D1 is D + 1,
+no_attack(Q, Others, D1).
+
+ Query: four_queens(Solution).
+--------------------------------------------------------------
+LAB-7:-
+
+% Define distances (symmetric)
+dist(a, b, 10).
+dist(a, c, 15).
+dist(a, d, 20).
+dist(b, c, 35). 
+dist(b, d, 25).
+dist(c, d, 30).
+% Symmetric distance helper
+distance(X, Y, D) :- dist(X, Y, D).
+distance(X, Y, D) :- dist(Y, X, D).
+% Calculate total distance of a route
+total_distance([_], 0).
+total_distance([City1, City2 | Rest], Distance) :- 
+distance(City1, City2, D1),
+total_distance([City2 | Rest], D2),
+Distance is D1 + D2.
+% Permute list
+permute([], []).
+permute(List, [H|T]) :- 
+select(H, List, Remaining),
+permute(Remaining, T).
+% Solve TSP without using dynamic predicates 
+solve_tsp(StartCity, BestRoute, BestDistance) :-
+% Get unique list of cities connected to StartCity
+findall(City, (dist(StartCity, City, _); dist(City, StartCity, _)), CitiesDup), sort(CitiesDup, Cities),
+% Generate all permutations of cities excluding StartCity
+permute(Cities, Permuted),
+% Build all routes and their distances
+findall(Distance-Route,
+(permute(Cities, Perm),
+append([StartCity], Perm, Temp),
+append(Temp, [StartCity], Route), 
+total_distance(Route, Distance)),
+Routes),
+% Sort by distance and pick the best
+sort(Routes, [BestDistance-BestRoute | _]).
+
+Query: solve_tsp(a, Route, Cost). 
+--------------------------------------------------------------
+LAB-8:-
+Water-jug problem:
+
+% state(Jug4, Jug3)
+% Goal state
+goal(state(2, _)).
+% Initial state
+start(state(0, 0)).
+% Move rules (fill, empty, pour)
+move(state(_, Y), state(4, Y), 'Fill 4-liter jug').
+move(state(X, _), state(X, 3), 'Fill 3-liter jug'). 
+move(state(X, Y), state(0, Y), 'Empty 4-liter jug').
+move(state(X, Y), state(X, 0), 'Empty 3-liter jug').
+move(state(X, Y), state(NewX, NewY), 'Pour 3-liter jug into 4-liter jug') :- 
+Total is X + Y,
+Total =< 4,
+NewX is Total,
+NewY is 0.
+move(state(X, Y), state(4, NewY), 'Pour 3-liter into 4-liter (overflow)') :-
+Total is X + Y,
+Total > 4,
+NewX is 4,
+NewY is Total - 4.
+move(state(X, Y), state(NewX, NewY), 'Pour 4-liter jug into 3-liter jug') :- 
+Total is X + Y,
+Total =< 3,
+NewX is 0,
+NewY is Total.
+move(state(X, Y), state(NewX, 3), 'Pour 4-liter into 3-liter (overflow)') :-
+Total is X + Y,
+Total > 3,
+NewX is Total - 3.
+% Search logic
+path(Goal, Goal, _, [Goal]).
+path(Current, Goal, Visited, [Current | Path]) :- 
+move(Current, Next, _),
+\+ member(Next, Visited),
+path(Next, Goal, [Next | Visited], Path).
+solve_jug_problem :-
+start(Start),
+goal(Goal),
+path(Start, Goal, [Start], Path), 
+write('Solution path: '), nl,
+print_path(Path).
+print_path([]).
+print_path([H | T]) :-
+write(H), nl, 
+print_path(T).
+
+query: solve_jug_problem. 
+--------------------------------------------------------------
+--------------------------------------------------------------
+1)word analysis:
+is_vowel(Char) :- member(Char, [a, e, i, o, u]).
+word_analysis(Word) :- 
+atom_chars(Word, Chars),
+length(Chars, Len), 
+include(is_vowel, Chars, Vowels), 
+length(Vowels, VowelCount), 
+format('Word: ~w, Length: ~d, Vowels: ~d~n', [Word, Len, VowelCount]).
+
+Query: word_analysis('elephant').
+--------------------------------------------------------------
+--------------------------------------------------------------
+2)Word Generation:
+
+prefix(un).
+prefix(re).
+root(do).
+suffix(ing). 
+suffix(ed). 
+generate_word(Word) :- 
+prefix(P), 
+root(R), 
+suffix(S), 
+atom_concat(P, R, PR), 
+atom_concat(PR, S, Word). 
+
+Query: generate_word(Word). 
+--------------------------------------------------------------
+--------------------------------------------------------------
+3) Morphology
+
+morpheme(unhappy, prefix(un), root(happy)). 
+morpheme(rerun, prefix(re), root(run)). 
+morpheme(running, root(run), suffix(ing)). 
+
+Query: morpheme(Word, Prefix, Root). 
+--------------------------------------------------------------
+--------------------------------------------------------------
+4) N-Gram Generation 
+bigrams([], []). 
+bigrams([_], []). 
+bigrams([A,B|T], [[A,B]|Rest]) :- 
+bigrams([B|T], Rest). 
+
+Query: bigrams([i, love, ai, projects], Bigrams).
+--------------------------------------------------------------
+--------------------------------------------------------------
+5) N-Gram Smoothing
+unigram_count(the, 3). 
+unigram_count(cat, 2). 
+bigram_count(the, cat, 1). 
+vocab_size(100). % assume vocabulary size 
+laplace_smooth(BigramProb) :- 
+Bigram = (the, cat), 
+Bigram = (W1, W2), 
+unigram_count(W1, UC), 
+bigram_count(W1, W2, BC), 
+vocab_size(V), 
+BigramProb is (BC + 1) / (UC + V). 
+
+Query: laplace_smooth(P).
+--------------------------------------------------------------
+
+
