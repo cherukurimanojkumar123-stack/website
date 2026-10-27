@@ -1,0 +1,131 @@
+1.Write a program in prolog to implement simple facts and queries
+
+% Facts about students
+student(john).
+student(mary).
+student(alice).
+likes(john, mathematics).
+likes(john, programming).
+likes(mary, english).
+likes(alice, mathematics).
+studies(john, computer_science).
+studies(mary, english).
+studies(alice, computer_science).
+
+Queries
+?- student(john).
+?- student(tom).
+?-likes(john, X).
+?-likes(X, mathematics).
+?-studies(alice, X).
+?-likes(mary, mathematics).
+---------------------------------------------------------------------
+2.Write a program in prolog to implement simple arithmetic.
+
+% Simple Arithmetic
+add(A, B, Result) :-
+    Result is A + B.
+sub(A, B, Result) :-
+    Result is A - B.
+mul(A, B, Result) :-
+    Result is A * B.
+div(A, B, Result) :-
+    Result is A / B.
+
+Queries
+?- add(10, 5, Result).
+?- sub(10, 5, Result).
+?- mul(10, 5, Result).
+?-div(10, 5, Result).
+---------------------------------------------------------------------
+3.Write a program in prolog to solve Monkey banana problem
+
+% Monkey and Banana Problem
+can_get_banana :-
+    monkey(at_floor),
+    box(at_floor),
+    banana(hanging),
+    move_box,
+    climb_box,
+     get_banana.
+monkey(at_floor).
+box(at_floor).
+banana(hanging).
+move_box :-
+write('Monkey pushes the box under the bananas.'), nl.
+climb_box :-
+write('Monkey climbs on the box.'), nl.
+get_banana :-
+write('Monkey gets the bananas.'), nl.
+
+Queries
+?-can_get_banana.
+?- monkey(at_floor).
+?- banana(on_floor).
+?- box(at_floor).
+?- monkey(on_box).
+---------------------------------------------------------------------
+4.Write a program in prolog to solve Tower of Hanoi
+
+% Tower of Hanoi
+hanoi(1, A, _, C) :-
+write('Move disk from '), write(A),
+write(' to '), write(C), nl.
+hanoi(N, A, B, C) :-
+    N > 1,
+    N1 is N - 1,
+hanoi(N1, A, C, B),
+hanoi(1, A, B, C),
+hanoi(N1, B, A, C).
+
+Queries
+?- hanoi(3, left, middle, right).
+?-hanoi(2, left, middle, right).
+---------------------------------------------------------------------
+5.Write a program in prolog to solve 4-Queens problem
+
+% 4-Queens Problem
+queens(Q) :-
+permutation([1,2,3,4], Q),
+    safe(Q).
+safe([]).
+safe([Q|Qs]) :-
+safe(Qs),
+no_attack(Q, Qs, 1).
+no_attack(_, [], _).
+no_attack(Q, [Q2|Qs], D) :-
+    Q =\= Q2,
+abs(Q - Q2) =\= D,
+    D1 is D + 1,
+no_attack(Q, Qs, D1).
+
+Queries
+?- queens(Q).
+---------------------------------------------------------------------
+6.Write a program in prolog to solve traveling salesman problem
+
+% Traveling Salesman Problem
+road(a,b,10).
+road(a,c,15).
+road(a,d,20).
+road(b,c,35).
+road(b,d,25).
+road(c,d,30).
+distance(X,Y,D) :- road(X,Y,D).
+distance(X,Y,D) :- road(Y,X,D).
+tsp(Path,Cost) :-
+    permutation([b,c,d],P),
+    Path = [a|P],
+append(Path,[a],Route),
+cost(Route,Cost).
+cost([_],0).
+cost([A,B|T],Cost) :-
+    distance(A,B,D),
+    cost([B|T],C),
+    Cost is D+C.
+
+Query
+?-tsp(Path, Cost).
+---------------------------------------------------------------------
+
+
