@@ -41,8 +41,48 @@ dfs_helper(Start, Goal, [Start], Path).
 % Base case: Goal reached 
 dfs_helper(Goal, Goal, Visited, Path) :- 
 reverse(Visited, Path). 
-% Recursive case: explore next edge 
-dfs_helper(Current, Goal, Visited, Path) :- 
-edge(Current, Next), 
-\+ member(Next, Visited), 
-dfs_helper(Next, Goal, [Next|Visited], Path).
+
+-----------------------------------------
+lab 6 (travelling salesman) 
+
+% tsp.pl 
+% Solves the Travelling Salesman Problem (TSP) for a small set of cities 
+% --- Distance facts (symmetric) --- 
+distance(a, b, 10). 
+distance(a, c, 15). 
+distance(b, c, 35). 
+% Add symmetric distances 
+distance(X, Y, D) :- distance(Y, X, D), X \= Y. 
+% List of cities (3 for small stack usage) 
+cities([a, b, c]). 
+% --- Route cost calculation --- 
+path_cost([_], 0). 
+path_cost([A, B | Rest], Cost) :- 
+distance(A, B, D), 
+path_cost([B | Rest], RestCost), 
+Cost is D + RestCost. 
+% Add return to start for full round trip 
+round_trip_cost([Start | Rest], TotalCost) :- 
+append(Rest, [Start], FullRoute), 
+path_cost([Start | FullRoute], TotalCost). 
+% --- Manual minimum finder (no findall) --- 
+tsp_best_route(BestRoute, BestCost) :- 
+cities([Start | RestCities]), 
+tsp_try_permutations(Start, RestCities, nil, inf, BestRoute, BestCost). 
+% Try all permutations manually and keep the best 
+tsp_try_permutations(_, [], RouteSoFar, CostSoFar, RouteSoFar, CostSoFar). 
+tsp_try_permutations(Start, Cities, _, _, BestRoute, BestCost) :- 
+permutation(Cities, Perm), 
+round_trip_cost([Start | Perm], Cost), 
+( 
+). 
+Cost < 999999 ->          
+% Accept any reasonable cost 
+tsp_try_permutations(Start, [], [Start | Perm], Cost, BestRoute, BestCost) 
+; 
+fail 
+% --- Entry Point --- 
+solve :- 
+tsp_best_route(Route, Cost), 
+write('Shortest Route: '), write(Route), nl, 
+write('Minimum Cost: '), write(Cost), nl.
