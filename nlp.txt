@@ -211,8 +211,27 @@ unigram_count(W1, UC),
 bigram_count(W1, W2, BC), 
 vocab_size(V), 
 BigramProb is (BC + 1) / (UC + V). 
-
-Query: laplace_smooth(P).
 --------------------------------------------------------------
+LAB-1:-
+% Facts parent(john, mary).
+parent(john, tom). 
+parent(susan, mary). 
+parent(susan, tom). 
+parent(mary, alice). 
+parent(mary, bob). 
 
+Queries: 1)parent(Parent, mary).
+2)parent(john, Child).
+--------------------------------------------------------------
+LAB-2:-
+add(X, Y, Result) :- 
+Result is X + Y.
+% Subtraction subtract(X, Y, Result) :-
+Result is X - Y.
+% Multiplication multiply(X, Y, Result) :- 
+Result is X * Y. 
+% Division (guard against division by zero) divide(X, Y, Result) :- 
+Y \= 0, Result is X / Y. 
+
+Queries: 1)add(5, 3, Result). 2) subtract(10, 4, Result). 3) multiply(7, 6, Result). 4) divide(20, 4, Result). 
 
