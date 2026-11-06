@@ -1,0 +1,232 @@
+----------------------------------------------------------------------------------------------------------------------------
+Program 4: Create a hyperlink to move around within a single page rather than to load another page.
+
+<html>
+<head>
+<title> Internal Linking </title>
+</head>
+<body>
+<h1 align=center >MY BOOK </h1>
+<p>My book contains the following chapters </p><br>
+<a href="#chap1">1. Introduction </a><br>
+<a href="#chap2">2. Topic 1 </a><br>
+<a href="#chap3">3. Topic 2  </a><br>
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<a name = "chap1"></a>
+<h3 align = "center"> Chapter 1</h3>
+<p>The  text here <br>
+       The text here  <br>
+       The text here  <br>
+       The text here  </p>
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<a name = "chap2"></a>
+<h3 align = "center"> Chapter 2</h3>
+<p>The text here <br>
+        The text here <br>
+       The text here <br>
+       The text here </p>
+<br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br>
+<a name = "chap3"></a>
+<h3 align = "center"> Chapter 3</h3>
+<p>The text here <br>
+       The text here <br>
+       The text here <br>
+       The text here <br></p>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------
+Program 5: Create a leave letter using different text formatting tags.
+<html>
+<head>
+<title> Second Program </title>
+</head>
+
+<body>
+
+<h3>Text Formatting Tags</h3>
+<p>
+<b>This text is bold</b><br>
+<u>This text underlined  </u><br>
+<i> Welcome </i>
+<strike>Striked text </strike>
+<marquee>J.K.C.College</marquee>
+<i>This text is italic</i><br>
+<em>This text is emphasized</em><br>
+<tt> Type writer Text </tt>
+    This is<sub> subscript</sub> and <sup>superscript</sup><br>
+
+<pre>   this is     predefined format
+
+                        J.K.C. College   “  
+                            *   *  *</pre>
+<tt>This is type writer text </tt><br>
+</p>
+<h3>Escape Sequences</h3>
+<p>Less than  &lt; <br> greater Than &gt;<br> Ampersand &amp;<br> Quotations &quot;<br>Non breakable space &nbsp;<br>CopyRigh t &copy; </p>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------
+Program 7: create a form by applying all attributes.
+<html>
+<head>
+<title>
+forms example
+</title>
+</head>
+<body>
+<form action="table.html">
+name:<input type="text" name="name" value=" "><br>
+password:<input type="password" name="password" value=" "><br>
+<textarea rows="10" cols="30">
+multiple
+line
+text
+</textarea><br>
+rumanian:<input type="checkbox" name="citizenship"><br/>
+spanish:<input type="checkbox" name="citizenship"><br/>
+<h1> choose citizenship </h1> 
+english:<input type="radio" name="citizenship"><br/>
+rumanian:<input type="radio" name="citizenship"><br/>
+spanish:<input type="radio" name="citizenship"><br/>
+<h1> gender</h1>
+<select>
+<option value="male"> male</option>
+<option value="female"> female</option>
+</select><br>
+<input type="submit" value="click hear"><br>
+<input type="reset" value="reset"><br>
+<input type ="image" src="image.jpg" value="beautiful" height="20" width="100"><br>
+<input type="file" name="upload"><br>
+</form>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------
+Program 8:      write java script to find factorial of a given number
+
+<html>
+<head>
+<title>Calculating Factorial</title>
+<script  language="javascript">
+
+function factorial(n)
+  {
+	var f=1,i;
+	for(i=1;i<=n;i++)
+		f=f*i;
+return f;
+  }
+</script>
+</head>
+<body>
+<script language="javascript">
+var n=parseInt(prompt("enter the number"," "));
+var f=factorial(n);
+document.write("factorial value="+f);
+</script>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------
+Program 9:      write java script to Calculate Sum of Digits of a Number
+
+<html>
+<head>
+<title>Calculating Sum of Digits of a Number</title>
+</head>
+<body>
+<script language="javascript">
+var n=parseInt(prompt("enter the number"," "));
+var sum=0,r;
+	while(n!=0)
+	{
+		r=n%10;
+		sum=sum+r;
+		n=Math.floor(n/10);
+	}
+document.writeln("sum of digits="+sum);
+</script>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------
+Program 10: write a java script to display student details in a web page
+
+<html>
+<head>
+<title>Student details</title>
+</head>
+<body>
+<script language="javascript">
+varstno=prompt("enter student number"," ");
+varstname=prompt("enter student name"," ");
+varfname=prompt("enter Father's  name"," ");
+var address=prompt("enter student address"," ");
+var gender=prompt("enter gender"," ");;
+varmailid=prompt("enter mail-id"," ");
+document.writeln("<h3 align=center>Student Number:"+stno+"<br>");
+document.writeln("<h3 align=center>Student Name:"+stname+"<br>");
+document.writeln("<h3 align=center>Father Name:"+fname+"<br>");
+document.writeln("<h3 align=center>Address:"+address+"<br>");
+document.writeln("<h3 align=center>Gender:"+gender+"<br>");
+document.writeln("<h3 align=center>mail-id:"+mailid+"<br>");
+</script>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------
+Program 11: create a student bio data using forms
+<html>
+<head>
+<title>Student BioData</title></head>
+<body>
+<h2 align="center">Student Information</h2>
+<form>
+Name: <input type="text"  maxlength=30 size=15><br>
+Father's Name:<input type="text"  maxlength=30 size=15><br>
+D0B:<input type="text" size=10><br>
+Address for correspondence:<br>
+<textarea name="b" rows=5 cols=35></textarea><br>
+Gender: &nbsp;&nbsp; Male <input type="radio" name="gen" value="m">
+Female: <input type="radio" name="gen" value="f"><br>
+Certificates upload: <input type="file" value="browse"><br>
+Country:
+<select name="cou" size=1>
+<option>United States</option>
+<option>Brazil</option>
+<option>Russia</option>
+<option selected>India</option>
+</select><br>
+if u have already account in:<br>
+<input type=checkbox name=acc1 checked>yahoo<br>
+<input type=checkbox name=acc2 >gmail<br>
+<input type=checkbox name=acc2>rediff<br>
+Enter your mail-id:
+<input type=text size=30 maxlength=50><br>
+Upload your photo:<input type="image" src="img368.jpg" width=50 height=50><br>
+<input type="Submit" value="Submit">
+<input type="Reset" value="Reset">
+</form>
+</body>
+</html>
+----------------------------------------------------------------------------------------------------------------------------
+Program 12: create a web page of using different style sheets.
+<html>
+<head>
+<link rel=stylesheet  type="text/css" href="a.css">
+<style type="text/css">
+h1  {  background-color : yellow;    } 
+       h2 { color : maroon; } 
+</style>
+</head>
+<body>
+<p style="color:red;"> The text color is red. This is example for inline style sheet. </p><br>
+<h1>Level one heading</h1>
+<h2>Level two heading</h2>
+<h3>Level three heading</h3>
+</html>
+
+CSS File: a.css
+	
+h3 { color: #3645DB; letter-spacing : 1em;}
+body { background-color : linen; }	
+----------------------------------------------------------------------------------------------------------------------------
