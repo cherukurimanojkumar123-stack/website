@@ -230,3 +230,42 @@ CSS File: a.css
 h3 { color: #3645DB; letter-spacing : 1em;}
 body { background-color : linen; }	
 ----------------------------------------------------------------------------------------------------------------------------
+<html>
+<head>
+<style type="text/css">
+.abc
+{
+z-index:1;
+postion:absolute;
+top:200;
+left:200;
+}
+.jkc
+{
+z-index:2;
+postion:absolute;
+top:250;
+left:250;
+}
+.sai
+{
+z-index:3;
+postion:absolute;
+top:300;
+left:300;
+}
+</style>
+</head>
+<body>
+<div class="abc">
+<img src="sunset.jpg" width=300 height=300>
+</div>
+<div class="jkc">
+<img src="winter.jpg" width=300 height=300>
+</div>
+<div class="sai">
+<img src="bluehills.jpg" width=300 height=300>
+</div>
+</body>
+</html>
+
