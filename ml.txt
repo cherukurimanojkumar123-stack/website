@@ -1,0 +1,231 @@
+2. Introduction to basic commands Continued:
+a) Conditional Statements
+Simple if Statement
+num = int(input("Enter a number: "))
+if num > 0:
+    print("Positive Number")
+if-else Statement
+num = int(input("Enter a number: "))
+if num % 2 == 0:
+    print("Even Number")
+else:
+    print("Odd Number")
+if-elif-else Statement
+marks = int(input("Enter marks: "))
+if marks >= 90:
+    print("Grade A")
+elif marks >= 75:
+    print("Grade B")
+elif marks >= 50:
+    print("Grade C")
+else:
+    print("Fail")
+
+b) Loops
+For Loop 
+n = int(input("Enter a number: "))
+fact = 1
+for i in range(1, n + 1):
+    fact *= i
+print("Factorial =", fact)
+While Loop
+num = int(input("Enter a number: "))
+reverse = 0
+while num > 0:
+    digit = num % 10
+    reverse = reverse * 10 + digit
+    num //= 10
+print("Reverse =", reverse)
+-------------------------------------------------------------------------------------------------------------
+3 Data Manipulation Package installation and different operations using installed package
+import pandas as pd
+data = {
+"Name":["John","Alice","David"],
+"Age":[22,21,23],
+"Marks":[85,90,88]
+}
+df = pd.DataFrame(data)
+print(df).
+df["Grade"] = ["A","A+","A"]
+print(df)
+#Updating Values
+df.loc[0,"Marks"] = 95
+print(df)
+#Filtering Data
+print(df[df["Marks"] > 85])
+#Sorting Data
+print(df.sort_values(by="Marks"))
+# Save to CSV
+df.to_csv("students.csv", index=False)
+--------------------------------------------------------------------------------------------------------------
+4 Standard Library function to plot the Graphs
+1. Line Graph
+import matplotlib.pyplot as plt
+
+students = ["Aarav", "Priya", "Rahul", "Sneha", "Arjun"]
+marks = [85, 92, 78, 88, 81]
+plt.plot(students, marks)
+plt.title("Student Marks")
+plt.xlabel("Students")
+plt.ylabel("Marks")
+
+plt.show()
+2. Bar Graph
+import matplotlib.pyplot as plt
+students = ["Aarav", "Priya", "Rahul", "Sneha", "Arjun"]
+marks = [85, 92, 78, 88, 81]
+plt.bar(students, marks)
+plt.title("Student Marks")
+plt.xlabel("Students")
+plt.ylabel("Marks")
+plt.show()
+3. Pie Chart
+import matplotlib.pyplot as plt
+students = ["Aarav", "Priya", "Rahul", "Sneha", "Arjun"]
+marks = [85, 92, 78, 88, 81]
+plt.pie(marks, labels=students, autopct="%1.1f%%")
+plt.title("Student Marks Distribution")
+plt.show()
+4. Scatter Plot
+import matplotlib.pyplot as plt
+roll_no = [101, 102, 103, 104, 105]
+marks = [85, 92, 78, 88, 81]
+plt.scatter(roll_no, marks)
+plt.title("Roll Number vs Marks")
+plt.xlabel("Roll Number")
+plt.ylabel("Marks")
+plt.show()
+
+5. Histogram
+import matplotlib.pyplot as plt
+marks = [85, 92, 78, 88, 81, 76, 90, 84, 95, 87]
+plt.hist(marks, bins=5)
+plt.title("Marks Distribution")
+plt.xlabel("Marks")
+plt.ylabel("Frequency")
+plt.show()
+--------------------------------------------------------------------------------------------------------------
+5 Basic Data Exploration on any dataset available publicly
+import pandas as pd
+		
+# Load the dataset
+df = pd.read_csv("iris.csv")
+
+# Display the dataset
+print(df)
+
+# Explore the data
+print(df.head())
+print(df.tail())
+print(df.shape)
+print(df.columns)
+print(df.dtypes)
+print(df.info())
+print(df.describe())
+print(df.isnull().sum())
+
+# Explore individual columns
+print(df["species"])
+print(df["species"].value_counts())
+print("Average Sepal Length:", df["sepal_length"].mean())
+print("Maximum Petal Length:", df["petal_length"].max())
+print("Minimum Petal Width:", df["petal_width"].min())
+--------------------------------------------------------------------------------------------------------------
+10 Implement Decision Tree and Support Vector Machine using Library Functions
+#Decision Tree Program
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+df = pd.read_csv("iris.csv")
+X = df.drop("species", axis=1)
+y = df["species"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("Decision Tree Accuracy:", accuracy_score(y_test, y_pred))
+
+SVM  Program
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+df = pd.read_csv("iris.csv")
+
+X = df.drop("species", axis=1)
+y = df["species"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = SVC(kernel="linear")
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("SVM Accuracy:", accuracy_score(y_test, y_pred))
+--------------------------------------------------------------------------------------------------------------
+7  Learning Algorithms-kNN Linear Regression
+#k-NN  Program
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+df = pd.read_csv("iris.csv")
+
+X = df.drop("species", axis=1)
+y = df["species"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = KNeighborsClassifier(n_neighbors=3)
+
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+#Linear Regression Program
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+df = pd.read_csv("student_marks.csv")
+
+X = df[["Hours"]]
+y = df["Marks"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+model = LinearRegression()
+
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+
+print("R2 Score:", r2_score(y_test, y_pred))
+
+
+
+
+
+
+
+
+
